@@ -70,7 +70,7 @@ type DataPoint struct {
 
 // TimedDataPoint represents a data point
 type TimedDataPoint struct {
-	T string  `json:"t"`
+	T string  `json:"x"`
 	Y float64 `json:"y"`
 }
 
