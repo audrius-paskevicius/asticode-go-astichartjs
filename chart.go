@@ -89,8 +89,8 @@ type Options struct {
 
 // Scales represents scales options
 type Scales struct {
-	XAxes []Axis `json:"xAxes,omitempty"`
-	YAxes []Axis `json:"yAxes,omitempty"`
+	XAxes []Axis `json:"x,omitempty"`
+	YAxes []Axis `json:"y,omitempty"`
 }
 
 // Axis represents an axis options
