@@ -15,8 +15,11 @@ const (
 
 // Chart axis type
 const (
-	ChartAxisTypesLinear = "linear"
-	ChartAxisTypesTime   = "time"
+	ChartAxisTypesLinear      = "linear"
+	ChartAxisTypesTime        = "time"
+	ChartAxisTypesTimeseries  = "timeseries"
+	ChartAxisTypesLogarithmic = "logarithmic"
+	ChartAxisTypesCategory    = "category"
 )
 
 // Chart background colors
@@ -68,50 +71,62 @@ type DataPoint struct {
 	Y float64 `json:"y"`
 }
 
-// TimedDataPoint represents a data point
+// TimedDataPoint represents a time-based data point
 type TimedDataPoint struct {
 	T string  `json:"x"`
 	Y float64 `json:"y"`
 }
 
-// Options represents options
+// Options represents chart options
 type Options struct {
-	Animation                   *Animation `json:"animation,omitempty"`
-	Elements                    *Elements  `json:"elements,omitempty"`
-	Hover                       *Hover     `json:"hover,omitempty"`
-	MaintainAspectRatio         *bool      `json:"maintainAspectRatio,omitempty"`
-	Responsive                  *bool      `json:"responsive,omitempty"`
-	ResponsiveAnimationDuration *int       `json:"responsiveAnimationDuration,omitempty"`
-	Scales                      *Scales    `json:"scales,omitempty"`
-	Plugins                     *Plugins   `json:"plugins,omitempty"`
+	Animation           *Animation `json:"animation,omitempty"`
+	Elements            *Elements  `json:"elements,omitempty"`
+	Hover               *Hover     `json:"hover,omitempty"`
+	MaintainAspectRatio *bool      `json:"maintainAspectRatio,omitempty"`
+	Responsive          *bool      `json:"responsive,omitempty"`
+	Scales              *Scales    `json:"scales,omitempty"`
+	Plugins             *Plugins   `json:"plugins,omitempty"`
 }
 
-// Plugins represents plugins options
+// Plugins represents plugin options
 type Plugins struct {
 	Legend *Legend `json:"legend,omitempty"`
 	Title  *Title  `json:"title,omitempty"`
 }
 
-// Scales represents scales options
+// Scales represents scales options (Chart.js 4.x)
 type Scales struct {
-	XAxes Axis `json:"x,omitempty"`
-	YAxes Axis `json:"y,omitempty"`
+	X Axis `json:"x,omitempty"`
+	Y Axis `json:"y,omitempty"`
 }
 
-// Axis represents an axis options
+// Axis represents axis options (Chart.js 4.x)
 type Axis struct {
-	Display    *bool       `json:"display,omitempty"`
-	Position   string      `json:"position,omitempty"`
-	ScaleLabel *ScaleLabel `json:"scaleLabel,omitempty"`
-	Stacked    *bool       `json:"stacked,omitempty"`
-	Ticks      *Ticks      `json:"ticks,omitempty"`
-	TimeType   *TimeType   `json:"time,omitempty"`
-	Type       string      `json:"type,omitempty,"`
+	Display  *bool      `json:"display,omitempty"`
+	Position string     `json:"position,omitempty"`
+	Stacked  *bool      `json:"stacked,omitempty"`
+	Ticks    *Ticks     `json:"ticks,omitempty"`
+	Type     string     `json:"type,omitempty"`
+	TimeType *TimeType  `json:"time,omitempty"`
+	Title    *AxisTitle `json:"title,omitempty"`
 }
 
-// Ticks represents an ticks options
-type Ticks struct {
-	FontSize *int `json:"fontSize,omitempty"`
+// AxisTitle represents a axis title options
+type AxisTitle struct {
+	Display *bool       `json:"display,omitempty"`
+	Text    interface{} `json:"text,omitempty"` // string or []string
+	Color   string      `json:"color,omitempty"`
+	Font    *Font       `json:"font,omitempty"`
+	Padding *Padding    `json:"padding,omitempty"`
+	Align   string      `json:"align,omitempty"` // "start", "center", "end"
+}
+
+// Padding ...
+type Padding struct {
+	Top    *int `json:"top,omitempty"`
+	Bottom *int `json:"bottom,omitempty"`
+	Left   *int `json:"left,omitempty"`
+	Right  *int `json:"right,omitempty"`
 }
 
 // TimeType ...
@@ -124,48 +139,54 @@ type TimeDisplayFormats struct {
 	TimeDisplayFormatMillisecond string `json:"millisecond,omitempty"`
 }
 
-// ScaleLabel represents a scale label options
-type ScaleLabel struct {
-	Display     *bool  `json:"display,omitempty"`
-	LabelString string `json:"labelString,omitempty"`
+// Ticks represents tick options (Chart.js 4.x)
+type Ticks struct {
+	Font *Font `json:"font,omitempty"`
 }
 
-// Title represents a title options
+// Font represents tick font options
+type Font struct {
+	Size       *int    `json:"size,omitempty"`
+	Family     string  `json:"family,omitempty"`
+	Weight     string  `json:"weight,omitempty"`
+	Style      string  `json:"style,omitempty"`
+	LineHeight float64 `json:"lineHeight,omitempty"`
+}
+
+// Title represents a chart title
 type Title struct {
 	Display *bool  `json:"display,omitempty"`
 	Text    string `json:"text,omitempty"`
+	Font    *Font  `json:"font,omitempty"`
 }
 
-// Legend represents a legend options
+// Legend represents legend options
 type Legend struct {
 	Display *bool         `json:"display,omitempty"`
 	Labels  *LegendLabels `json:"labels,omitempty"`
 }
 
-// LegendLabels represents a legend options
+// LegendLabels represents legend label options
 type LegendLabels struct {
-	FontSize *int `json:"fontSize,omitempty"`
+	Font          *Font `json:"font,omitempty"`
 	UsePointStyle *bool `json:"usePointStyle,omitempty"`
 }
 
-// Animation ...
+// Animation represents animation options
 type Animation struct {
 	Duration *int `json:"duration,omitempty"`
 }
 
-// Hover ...
-type Hover struct {
-	AnimationDuration *int `json:"animationDuration,omitempty"`
-}
+// Hover represents hover options (Chart.js 4.x — no animationDuration)
+type Hover struct{}
 
-// Elements ...
+// Elements represents element options
 type Elements struct {
 	Line *Line `json:"line,omitempty"`
 }
 
-// Line ...
+// Line represents line element options
 type Line struct {
 	Fill    *bool    `json:"fill,omitempty"`
 	Tension *float64 `json:"tension,omitempty"`
 }
-
