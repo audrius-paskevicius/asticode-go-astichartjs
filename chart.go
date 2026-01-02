@@ -79,12 +79,17 @@ type Options struct {
 	Animation                   *Animation `json:"animation,omitempty"`
 	Elements                    *Elements  `json:"elements,omitempty"`
 	Hover                       *Hover     `json:"hover,omitempty"`
-	Legend                      *Legend    `json:"legend,omitempty"`
 	MaintainAspectRatio         *bool      `json:"maintainAspectRatio,omitempty"`
 	Responsive                  *bool      `json:"responsive,omitempty"`
 	ResponsiveAnimationDuration *int       `json:"responsiveAnimationDuration,omitempty"`
 	Scales                      *Scales    `json:"scales,omitempty"`
-	Title                       *Title     `json:"title,omitempty"`
+	Plugins                     *Plugins   `json:"plugins,omitempty"`
+}
+
+// Plugins represents plugins options
+type Plugins struct {
+	Legend *Legend `json:"legend,omitempty"`
+	Title  *Title  `json:"title,omitempty"`
 }
 
 // Scales represents scales options
@@ -140,6 +145,7 @@ type Legend struct {
 // LegendLabels represents a legend options
 type LegendLabels struct {
 	FontSize *int `json:"fontSize,omitempty"`
+	UsePointStyle *bool `json:"usePointStyle,omitempty"`
 }
 
 // Animation ...
