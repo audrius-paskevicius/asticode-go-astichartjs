@@ -1,5 +1,7 @@
 package astichartjs
 
+// chart.js-4.5.1
+
 // Chart types
 const (
 	ChartTypeBar     = "bar"
